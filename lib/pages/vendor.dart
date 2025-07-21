@@ -6,6 +6,21 @@ class Vendors extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<Map<String, String>> vendors = [
+      {
+        "name": "ABC Vendors",
+        "type": "ABC Wholes",
+        "phone": "123-445-5667",
+        "location": "Metropolis"
+      },
+      {
+        "name": "XYZ Vendors",
+        "type": "XYZ Retailers",
+        "phone": "555-123-7890",
+        "location": "Gotham"
+      },
+    ];
+
 
     TextEditingController searchcontroller = TextEditingController();
     return Scaffold(
@@ -59,89 +74,97 @@ class Vendors extends StatelessWidget {
               ),
             ),
           ),
-          Card(
-            elevation: 3,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: Colors.blue[200],
-                        child: Icon(Icons.store, color: Colors.blue),
-                      ),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+          Expanded(
+            child: ListView.builder(
+              itemCount: vendors.length,
+              itemBuilder: ( context, index) {
+                final vendor = vendors[index];
+                return  Card(
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
                           children: [
-                            Text(
-                              "ABC Vendors",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
+                            CircleAvatar(
+                              backgroundColor: Colors.blue[200],
+                              child: Icon(Icons.store, color: Colors.blue),
+                            ),
+                            SizedBox(width: 10),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    vendor["name"]!,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  Text(
+                                   vendor ["type"]!,
+                                    style: TextStyle(color: Colors.grey[600]),
+                                  ),
+                                ],
                               ),
                             ),
-                            Text(
-                              "ABC Wholes",
-                              style: TextStyle(color: Colors.grey[600]),
+                            PopupMenuButton<String>(
+                              icon: Icon(Icons.more_vert),
+                              onSelected: (value) {},
+                              itemBuilder: (BuildContext context) =>
+                              <PopupMenuEntry<String>>[
+                                PopupMenuItem<String>(
+                                  value: 'edit ',
+                                  child: Text('Edit Vendor'),
+                                ),
+                                PopupMenuItem<String>(
+                                  value: 'view',
+                                  child: Text('View Vendor'),
+                                ),
+                                PopupMenuItem<String>(
+                                  value: 'product',
+                                  child: Text('View Fix Peoduct'),
+                                ),
+                                PopupMenuItem<String>(
+                                  value: 'deactive',
+                                  child: Text("Deactive Vendor"),
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                      ),
-                      PopupMenuButton<String>(
-                        icon: Icon(Icons.more_vert),
-                        onSelected: (value) {},
-                        itemBuilder: (BuildContext context) =>
-                        <PopupMenuEntry<String>>[
-                          PopupMenuItem<String>(
-                            value: 'edit ',
-                            child: Text('Edit Vendor'),
-                          ),
-                          PopupMenuItem<String>(
-                            value: 'view',
-                            child: Text('View Vendor'),
-                          ),
-                          PopupMenuItem<String>(
-                            value: 'product',
-                            child: Text('View Fix Peoduct'),
-                          ),
-                          PopupMenuItem<String>(
-                            value: 'deactive',
-                            child: Text("Deactive Vendor"),
-                          ),
-                        ],
-                      ),
-                    ],
+                        Divider(thickness: 1, color: Colors.grey),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(Icons.phone, color: Colors.green),
+                                SizedBox(width: 8),
+                                Text(vendor["phone"]!),
+                              ],
+                            ),
+            
+                            Row(
+                              children: [
+                                Icon(Icons.location_pin, color: Colors.red),
+                                SizedBox(width: 8),
+                                Text(vendor["location"]!),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                  Divider(thickness: 1, color: Colors.grey),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(Icons.phone, color: Colors.green),
-                          SizedBox(width: 8),
-                          Text("123-445-5667"),
-                        ],
-                      ),
-
-                      Row(
-                        children: [
-                          Icon(Icons.location_pin, color: Colors.red),
-                          SizedBox(width: 8),
-                          Text("Metropolis"),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                );
+              },
             ),
           ),
 
